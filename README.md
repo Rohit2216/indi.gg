@@ -5,7 +5,7 @@ The Book Recommendation API is a robust and efficient solution for managing book
 
 ## API Documentation
 
-For detailed API documentation, explore the interactive [Swagger Documentation](#swagger-documentation) provided.
+For detailed API documentation, explore the interactive [Swagger Documentation](#swagger-documentation)(https://library-e2id.onrender.com/api-docs/) provided.
 
 
 ## Tech Stack
@@ -72,7 +72,7 @@ To use the JWT token to authenticate with the API, you need to include it in the
 | `/book/delete/{id}`       | DELETE | Book ID           | Success message      | Delete a book by ID.                                     |
 | `/book/getbooks`          | GET    | None              | List of books        | Get a list of all books.                                 |
 | `/book/search`            | GET    | Search term       | List of matching books| Search for books by title, author, or ISBN.              |
-
+| `/recommendations/author/{authorName}`            | GET    | Search term       | List of matching books| Search for books by author.              |
 
 ### Borrowing API Endpoints
 
@@ -85,6 +85,13 @@ To use the JWT token to authenticate with the API, you need to include it in the
 | Endpoint                  | Method | Input                 | Output              | Description                                                |
 |---------------------------|--------|-----------------------|----------------------|------------------------------------------------------------|
 | `/borrow/returnbooks`     | POST   | BorrowedBook ID, Return date | Success message | Return a borrowed book to the library.                  |
+
+### Borrow Book Get API Endpoints
+
+| Endpoint                  | Method | Input                 | Output              | Description                                                |
+|---------------------------|--------|-----------------------|----------------------|------------------------------------------------------------|
+| `/borrow/user/{userId}`     | GET   | userId | Success message | Get a list of all Borrowed Book.                  |
+
 
 These tables provide a clear breakdown of endpoints based on their functionality.
 
