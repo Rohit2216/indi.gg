@@ -15,8 +15,16 @@ const borrowedBookSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    expectedReturnDate: {
+        type: Date,
+        default: () => {
+            const returnDate = new Date();
+            returnDate.setDate(returnDate.getDate() + 14); // Assuming 14 days borrowing period
+            return returnDate;
+        },
+    },
     returnDate: {
-        type: Date, // Updated to store the return date
+        type: Date,
     },
 });
 

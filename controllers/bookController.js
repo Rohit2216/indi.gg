@@ -88,7 +88,7 @@ exports.addBook = async (req, res) => {
  *     summary: Update a book by ID
  *     tags: [Books]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -240,3 +240,73 @@ exports.getAllBooks = async (req, res) => {
 };
 
 
+exports.searchBooks = async (req, res) => {
+    const searchTerm = req.query.search; // Assuming the search term is passed in the query parameter 'q'
+    
+    try {
+        const searchResults = await Book.find({
+            $or: [
+                { title: { $regex: searchTerm, $options: 'i' } }, // Case-insensitive title search
+                { author: { $regex: searchTerm, $options: 'i' } }, // Case-insensitive author search
+                { ISBN: { $regex: searchTerm, $options: 'i' } } // Case-insensitive ISBN search
+            ]
+        });
+
+        res.json({ results: searchResults });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+/**
+ * @swagger
+ * /book/search:
+ *   get:
+ *     summary: Search for books by title, author, or ISBN
+ *     tags: [Books]
+ *     parameters:
+ *       - in: query
+ *         name: search
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The search term for title, author, or ISBN.
+ *     responses:
+ *       200:
+ *         description: Search results successfully retrieved.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 results:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Book'
+ *       500:
+ *         description: Internal Server Error
+ *       400:
+ *         description: Bad Request - Invalid search term or missing parameter.
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Book:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: The unique identifier for the book.
+ *         title:
+ *           type: string
+ *           description: The title of the book.
+ *         author:
+ *           type: string
+ *           description: The author of the book.
+ *         ISBN:
+ *           type: string
+ *           description: The ISBN of the book.
+ */

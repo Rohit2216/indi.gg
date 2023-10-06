@@ -5,6 +5,7 @@ const {userRouter}=require("./routes/userRoutes")
 const {bookRouter}=require("./routes/bookRouter")
 
 const {borrowRouter}=require("./routes/borrowRoutes")
+const {recommendRouter}=require("./routes/recommendationRoute")
 
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
@@ -21,6 +22,8 @@ app.get("/",(req,res)=>{
 app.use('/user', userRouter);
 app.use('/book', bookRouter);
 app.use('/borrow',borrowRouter);
+app.use('/recommendations', recommendRouter);
+
 
 const swaggerOptions = {
     definition: {
