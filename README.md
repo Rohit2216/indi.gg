@@ -1,5 +1,5 @@
 
-# Book Recommendation API
+# Library Management System API
 
 The Book Recommendation API is a robust and efficient solution for managing books, users, and providing personalized book recommendations based on authors. This API simplifies the process of book management and enhances user experience by offering tailored reading suggestions.
 
@@ -29,8 +29,17 @@ To run the API locally, follow these steps:
    ```bash
    npm install
    ```
+3. Configure environment variables:
+   
+   Create a `.env` file in the root of the project and add the following:
 
-3. Start the server:
+   ```env
+   port=8800
+   mongoUrl=mongodb://localhost:27017/book_management
+   JWT_SECRET=your-secret-key
+   ```
+
+4. Start the server:
 
    ```bash
    npm run server
