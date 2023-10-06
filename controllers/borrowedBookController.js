@@ -183,7 +183,79 @@ const returnBook = async (req, res) => {
 
 
 
+const getBorrowedBooksByUserId = async (req, res) => {
+    try {
+        const userId = req.params.userId; // Assuming userId is passed as a route parameter
+
+        // Find all borrowed books for the given userId
+        const borrowedBooks = await BorrowedBook.find({ userId });
+
+        res.status(200).json({ borrowedBooks });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+/**
+ * @swagger
+ * /borrow/user/{userId}:
+ *   get:
+ *     summary: Get borrowed books by user ID
+ *     tags: [User]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the user to retrieve borrowed books for.
+ *     responses:
+ *       200:
+ *         description: Borrowed books successfully retrieved.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 borrowedBooks:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/BorrowedBook'
+ *       500:
+ *         description: Internal Server Error
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     BorrowedBook:
+ *       type: object
+ *       properties:
+ *         userId:
+ *           type: string
+ *           description: The ID of the user who borrowed the book.
+ *         bookId:
+ *           type: string
+ *           description: The ID of the borrowed book.
+ *         borrowed_date:
+ *           type: string
+ *           format: date-time
+ *           description: The date and time when the book was borrowed.
+ *         expected_return_date:
+ *           type: string
+ *           format: date-time
+ *           description: The expected return date of the book.
+ *         return_date:
+ *           type: string
+ *           format: date-time
+ *           description: The actual return date of the book.
+ */
+
 module.exports = {
     borrowBook,
-    returnBook
+    returnBook,
+    getBorrowedBooksByUserId
 };
